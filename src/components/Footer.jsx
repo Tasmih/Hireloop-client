@@ -291,7 +291,7 @@ export default function Footer() {
               onMouseEnter={(e) => (e.currentTarget.style.color = "#c8d0dc")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#4a5568")}
             >
-              Privacy Guideline
+              
             </a>
           </div>
         </div>
