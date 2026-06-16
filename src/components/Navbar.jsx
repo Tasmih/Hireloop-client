@@ -13,17 +13,13 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     await signOut();
-
   }
 
+  // Base navigation links available to everyone
   const navLinks = [
     {
       label: "Browse Jobs",
       href: "/jobs",
-    },
-    {
-      label: "Companies",
-      href: "/companies",
     },
     {
       label: "Pricing",
@@ -31,12 +27,27 @@ export default function Navbar() {
     },
   ];
 
+  // Map roles to their specific dashboard paths
   const dashboardLinks = {
     seeker: '/dashboard/seeker',
     recruiter: '/dashboard/recruiter',
     admin: '/dashboard/admin'
   }
 
+  // Determine dynamic link for "Companies" based on user role
+  let companiesHref = "/companies"; // Default route for guest users
+  
+  if (user?.role === "recruiter") {
+    companiesHref = "/dashboard/recruiter/company"; // Specific profile route for recruiter
+  }
+
+  // Insert "Companies" link at index 1 (right after Browse Jobs)
+  navLinks.splice(1, 0, {
+    label: "Companies",
+    href: companiesHref,
+  });
+
+  // Push Dashboard link if user is logged in
   if (user?.email) {
     navLinks.push(
       {
@@ -45,6 +56,7 @@ export default function Navbar() {
       }
     )
   }
+
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0B0F]/80 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
